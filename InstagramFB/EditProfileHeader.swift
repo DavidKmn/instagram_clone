@@ -69,15 +69,15 @@ class EditProfileHeader: UICollectionViewCell {
         addSubview(aboveHeaderDividerLine)
         addSubview(belowHeaderDividerLine)
         
-        profileImageButton.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 15, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 100, height: 100)
+        profileImageButton.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: nil, paddingTop: 15, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 100, height: 100)
         profileImageButton.anchorCenterXToSuperview()
         
-        changeProfilePhotoButton.anchor(top: profileImageButton.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 160, height: 20)
+        changeProfilePhotoButton.anchor(top: profileImageButton.bottomAnchor, leading: nil, bottom: nil, trailing: nil, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 160, height: 20)
         changeProfilePhotoButton.anchorCenterXToSuperview()
         
-        aboveHeaderDividerLine.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        aboveHeaderDividerLine.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         
-        belowHeaderDividerLine.anchor(top: bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        belowHeaderDividerLine.anchor(top: bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         
     }
     

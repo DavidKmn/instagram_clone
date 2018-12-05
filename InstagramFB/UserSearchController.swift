@@ -69,8 +69,8 @@ class UserSearchController: UICollectionViewController, UICollectionViewDelegate
         let navBar = navigationController?.navigationBar
         
         navBar?.addSubview(searchBar)
-        
-        searchBar.anchor(top: navBar?.topAnchor, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
+                
+        searchBar.anchor(top: navBar?.topAnchor, leading: navBar?.leadingAnchor, bottom: navBar?.bottomAnchor, trailing: navBar?.trailingAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,7 +82,7 @@ class UserSearchController: UICollectionViewController, UICollectionViewDelegate
         }
     }
     
-    func enableCancelButton (searchBar : UISearchBar) {
+    func enableCancelButton(searchBar : UISearchBar) {
         for view1 in searchBar.subviews {
             for view2 in view1.subviews {
                 if view2.isKind(of: UIButton.self) {

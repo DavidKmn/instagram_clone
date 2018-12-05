@@ -14,9 +14,9 @@ class LoginController: UIViewController {
     lazy var dontHaveAnAccountButton: UIButton = {
         let button = UIButton(type: .system)
         
-        let attributedText = NSMutableAttributedString(string: "Don't have an account ? ", attributes: [NSAttributedStringKey.foregroundColor: UIColor.lightGray, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)])
+        let attributedText = NSMutableAttributedString(string: "Don't have an account ? ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
         
-        attributedText.append(NSAttributedString(string: "Sign Up", attributes: [NSAttributedStringKey.foregroundColor: UIColor.rgb(red: 17, green: 154, blue: 237), NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)]))
+        attributedText.append(NSAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.foregroundColor: UIColor.rgb(red: 17, green: 154, blue: 237), NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)]))
         
         button.setAttributedTitle(attributedText, for: .normal)
         
@@ -43,7 +43,7 @@ class LoginController: UIViewController {
         logoImageView.contentMode = .scaleAspectFill
         view.addSubview(logoImageView)
         
-        logoImageView.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 200, height: 50)
+        logoImageView.anchor(width: 200, height: 50)
         logoImageView.anchorCenterXToSuperview()
         logoImageView.anchorCenterYToSuperview()
         
@@ -77,7 +77,7 @@ class LoginController: UIViewController {
     }()
     
     lazy var loginButton: UIButton = {
-        let button = UIButton(type: UIButtonType.system)
+        let button = UIButton(type: UIButton.ButtonType.system)
         button.setTitle("Login", for: .normal)
         button.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
         button.layer.cornerRadius = 5
@@ -98,8 +98,7 @@ class LoginController: UIViewController {
         
         self.view.addSubview(errorLabel)
         
-        
-        errorLabel.anchor(top: stackView.bottomAnchor, left: stackView.leftAnchor, bottom: nil, right: stackView.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        errorLabel.anchor(top: stackView.bottomAnchor, leading: stackView.leadingAnchor, bottom: nil, trailing: stackView.trailingAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
         errorLabel.sizeToFit()
     }
@@ -108,7 +107,7 @@ class LoginController: UIViewController {
         
         guard let email = emailTextField.text, let password = passwordTextField.text else { return }
         
-        Auth.auth().signIn(withEmail: email, password: password) { (user, error: Error?) in
+        Auth.auth().signIn(withEmail: email, password: password) { (authResult, error: Error?) in
             
             if let error = error {
                 print("Error signing in: ", error.localizedDescription)
@@ -117,7 +116,7 @@ class LoginController: UIViewController {
             }
             
             // user signed in 
-            print("Success login user in: ", user?.uid ?? "")
+            print("Success login user in: ", authResult?.user.uid ?? "")
             
             guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
             
@@ -186,9 +185,9 @@ class LoginController: UIViewController {
         view.addSubview(dontHaveAnAccountButton)
         view.addSubview(logoContainerView)
         
-        dontHaveAnAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        dontHaveAnAccountButton.anchor(top: nil, leading: view.safeLeadingAnchor, bottom: view.safeBottomAnchor, trailing: view.safeTrailingAnchor, height: 50)
         
-        logoContainerView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 150)
+        logoContainerView.anchor(top: view.topAnchor, leading: view.safeLeadingAnchor, bottom: nil, trailing: view.safeTrailingAnchor, height: 150)
         
         setupInputFields()
         
@@ -210,7 +209,7 @@ class LoginController: UIViewController {
         
         view.addSubview(stackView)
         
-        stackView.anchor(top: logoContainerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 40, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 140)
+        stackView.anchor(top: logoContainerView.bottomAnchor, leading: view.safeLeadingAnchor, bottom: nil, trailing: view.safeTrailingAnchor, paddingTop: 40, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 140)
         
     }
 

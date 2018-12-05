@@ -34,7 +34,7 @@ class EditProfileController: UICollectionViewController, UICollectionViewDelegat
         }
         
         collectionView?.register(EditProfileInfoCell.self, forCellWithReuseIdentifier: infoCellId)
-        collectionView?.register(EditProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(EditProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         
         setupNavBar()
         
@@ -48,8 +48,8 @@ class EditProfileController: UICollectionViewController, UICollectionViewDelegat
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.isTranslucent = false
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleDoneButtonTap))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleCancelButtonTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: self, action: #selector(handleDoneButtonTap))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: self, action: #selector(handleCancelButtonTap))
     }
     
     private func fetchCurrentUserEmail() {

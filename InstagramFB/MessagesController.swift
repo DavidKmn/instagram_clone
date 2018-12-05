@@ -32,7 +32,7 @@ class MessagesController: UITableViewController {
         return true
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         guard let userUid = Auth.auth().currentUser?.uid else { return }
         guard let chatPartnerUid = messages[indexPath.row].chatPartnerUID() else { return }

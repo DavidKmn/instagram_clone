@@ -42,15 +42,15 @@ class HomePostCell: UICollectionViewCell {
         
         guard let post = self.post else { return }
         
-        let attributedText = NSMutableAttributedString(string: post.user.username, attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)])
+        let attributedText = NSMutableAttributedString(string: post.user.username, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
         
-        attributedText.append(NSAttributedString(string: " \(post.postCaption)", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]))
+        attributedText.append(NSAttributedString(string: " \(post.postCaption)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]))
         
-        attributedText.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 4)]))
+        attributedText.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 4)]))
         
         let timeAgoDisplayed = post.postCreationDate.timeAgoDisplay()
         
-        attributedText.append(NSAttributedString(string: timeAgoDisplayed, attributes: [NSAttributedStringKey.foregroundColor: UIColor.lightGray, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)]))
+        attributedText.append(NSAttributedString(string: timeAgoDisplayed, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]))
         
         self.captionLabel.attributedText = attributedText
     }
@@ -136,19 +136,19 @@ class HomePostCell: UICollectionViewCell {
         addSubview(optionsButton)
         addSubview(postPhotoImageView)
         
-        userProfileImageView.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        userProfileImageView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: nil, trailing: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         
-        optionsButton.anchor(top: self.topAnchor, left: nil, bottom: postPhotoImageView.topAnchor, right: self.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 44, height: 0)
+        optionsButton.anchor(top: self.topAnchor, leading: nil, bottom: postPhotoImageView.topAnchor, trailing: self.trailingAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 44, height: 0)
         
-        usernameLabel.anchor(top: self.topAnchor, left: userProfileImageView.rightAnchor, bottom: postPhotoImageView.topAnchor, right: optionsButton.leftAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        usernameLabel.anchor(top: self.topAnchor, leading: userProfileImageView.trailingAnchor, bottom: postPhotoImageView.topAnchor, trailing: optionsButton.leadingAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
-         postPhotoImageView.anchor(top: userProfileImageView.bottomAnchor, left: self.leftAnchor, bottom: nil, right: self.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+         postPhotoImageView.anchor(top: userProfileImageView.bottomAnchor, leading: self.leadingAnchor, bottom: nil, trailing: self.trailingAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         postPhotoImageView.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
 
         setupActionButtons()
         
         addSubview(captionLabel)
-        captionLabel.anchor(top: likeButton.bottomAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
+        captionLabel.anchor(top: likeButton.bottomAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
     }
     
     fileprivate func setupActionButtons() {
@@ -161,9 +161,9 @@ class HomePostCell: UICollectionViewCell {
         addSubview(stackView)
         addSubview(bookmarkButton)
         
-        stackView.anchor(top: postPhotoImageView.bottomAnchor, left: self.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 120, height: 50)
+        stackView.anchor(top: postPhotoImageView.bottomAnchor, leading: self.leadingAnchor, bottom: nil, trailing: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 120, height: 50)
         
-        bookmarkButton.anchor(top: postPhotoImageView.bottomAnchor, left: nil, bottom: nil, right: self.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 50)
+        bookmarkButton.anchor(top: postPhotoImageView.bottomAnchor, leading: nil, bottom: nil, trailing: self.trailingAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 50)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -38,7 +38,7 @@ class InputTextView: UITextView, UITextViewDelegate {
         
         addSubview(placeholderLabel)
         
-        placeholderLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        placeholderLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

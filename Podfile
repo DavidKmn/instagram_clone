@@ -1,4 +1,4 @@
-platform :ios, '9.0'
+platform :ios, '10.0'
 use_frameworks!
 
 target 'InstagramFB' do
@@ -8,6 +8,5 @@ target 'InstagramFB' do
 	pod 'Firebase/Storage'
 	pod 'Firebase/Auth' 
 	pod 'Firebase/Messaging'
-
 
 end

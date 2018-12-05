@@ -92,11 +92,11 @@ class EditProfileInfoCell: UICollectionViewCell {
         addSubview(userEdittableTextField)
         addSubview(dividerLine)
         
-        attributeLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 95, height: 0)
+        attributeLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 95, height: 0)
         
-        userEdittableTextField.anchor(top: topAnchor, left: attributeLabel.rightAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 14, width: 0, height: 0)
+        userEdittableTextField.anchor(top: topAnchor, leading: attributeLabel.trailingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 14, width: 0, height: 0)
         
-        dividerLine.anchor(top: bottomAnchor, left: userEdittableTextField.leftAnchor, bottom: nil, right: userEdittableTextField.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        dividerLine.anchor(top: bottomAnchor, leading: userEdittableTextField.leadingAnchor, bottom: nil, trailing: userEdittableTextField.trailingAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
  
     }
     

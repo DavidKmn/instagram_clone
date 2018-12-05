@@ -8,9 +8,51 @@
 
 import UIKit
 
+extension NSLayoutConstraint {
+    func activate() {
+        self.isActive = true
+    }
+    
+    func deactivate() {
+        self.isActive = false
+    }
+}
+
 extension UIView {
     
-    func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {
+    var safeTopAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return self.safeAreaLayoutGuide.topAnchor
+        } else {
+            return self.layoutMarginsGuide.topAnchor
+        }
+    }
+    
+    var safeBottomAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return self.safeAreaLayoutGuide.bottomAnchor
+        } else {
+            return self.layoutMarginsGuide.bottomAnchor
+        }
+    }
+    
+    var safeTrailingAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return self.safeAreaLayoutGuide.trailingAnchor
+        } else {
+            return self.layoutMarginsGuide.trailingAnchor
+        }
+    }
+    
+    var safeLeadingAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return self.safeAreaLayoutGuide.leadingAnchor
+        } else {
+            return self.layoutMarginsGuide.leadingAnchor
+        }
+    }
+    
+    func anchor(top: NSLayoutYAxisAnchor? = nil, leading: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, trailing: NSLayoutXAxisAnchor? = nil, paddingTop: CGFloat = 0, paddingLeft: CGFloat = 0, paddingBottom: CGFloat = 0, paddingRight: CGFloat = 0, width: CGFloat = 0, height: CGFloat = 0) {
         
         self.translatesAutoresizingMaskIntoConstraints = false
         
@@ -18,16 +60,16 @@ extension UIView {
             self.topAnchor.constraint(equalTo: top, constant: paddingTop).isActive = true
         }
         
-        if let left = left {
-            self.leftAnchor.constraint(equalTo: left, constant: paddingLeft).isActive = true
+        if let left = leading {
+            self.leadingAnchor.constraint(equalTo: left, constant: paddingLeft).isActive = true
         }
         
         if let bottom = bottom {
             self.bottomAnchor.constraint(equalTo: bottom, constant: -paddingBottom).isActive = true
         }
         
-        if let right = right {
-            self.rightAnchor.constraint(equalTo: right, constant: -paddingRight).isActive = true
+        if let right = trailing {
+            self.trailingAnchor.constraint(equalTo: right, constant: -paddingRight).isActive = true
         }
         
         if width != 0 {

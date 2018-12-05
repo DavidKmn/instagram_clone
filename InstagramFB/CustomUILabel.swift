@@ -11,6 +11,6 @@ import UIKit
 class LabelWithInsets: UILabel {
     
     override func drawText(in rect: CGRect) {
-        super.drawText(in: UIEdgeInsetsInsetRect(rect, UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 2)))
+        super.drawText(in: rect.inset(by: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 2)))
     }
 }

@@ -96,7 +96,7 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
         dummyCell.comment = commentsForPost[indexPath.item]
         dummyCell.layoutIfNeeded()
 
-        let estimatedSize = dummyCell.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
+        let estimatedSize = dummyCell.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
 
         let height = max(40 + 8 + 8, estimatedSize.height)
 

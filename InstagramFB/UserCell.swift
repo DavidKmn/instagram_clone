@@ -85,7 +85,7 @@ class UserCell: UITableViewCell {
         return view
     }()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         
         addSubview(profileImageView)
@@ -94,19 +94,19 @@ class UserCell: UITableViewCell {
         addSubview(lastMessageLabel)
         addSubview(unreadMessageView)
         
-        profileImageView.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
+        profileImageView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
         profileImageView.anchorCenterYToSuperview()
         
-        timeLabel.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 100, height: 30)
+        timeLabel.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 100, height: 30)
         
-        usernameLabel.anchor(top: nil, left: profileImageView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 8, width: frame.width - 60, height: 40)
+        usernameLabel.anchor(top: nil, leading: profileImageView.trailingAnchor, bottom: nil, trailing: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 8, width: frame.width - 60, height: 40)
         usernameLabel.anchorCenterYToSuperview(constant: -10)
         
-        lastMessageLabel.anchor(top: nil, left: profileImageView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 8, width: frame.width - 60, height: 40)
+        lastMessageLabel.anchor(top: nil, leading: profileImageView.trailingAnchor, bottom: nil, trailing: nil, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 8, width: frame.width - 60, height: 40)
         lastMessageLabel.anchorCenterYToSuperview(constant: 10)
         
         unreadMessageView.anchorCenterYToSuperview()
-        unreadMessageView.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 20, height: 20)
+        unreadMessageView.anchor(top: nil, leading: nil, bottom: nil, trailing: trailingAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 20, height: 20)
         
         
     }

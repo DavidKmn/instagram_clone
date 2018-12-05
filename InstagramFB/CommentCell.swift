@@ -15,9 +15,9 @@ class CommentCell: UICollectionViewCell {
            
             guard let comment = self.comment else { return }
             
-            let attributedText = NSMutableAttributedString(string: comment.user.username, attributes: [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 14)])
+            let attributedText = NSMutableAttributedString(string: comment.user.username, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)])
             
-            attributedText.append(NSAttributedString(string: " \(comment.commentText)", attributes: [NSAttributedStringKey.foregroundColor : UIColor.gray, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]))
+            attributedText.append(NSAttributedString(string: " \(comment.commentText)", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]))
             
             self.textView.attributedText = attributedText
             
@@ -47,9 +47,9 @@ class CommentCell: UICollectionViewCell {
         addSubview(textView)
         addSubview(profileImageView)
         
-        textView.anchor(top: self.topAnchor, left: profileImageView.rightAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, paddingTop: 4, paddingLeft: 4, paddingBottom: 4, paddingRight: 4, width: 0, height: 0)
+        textView.anchor(top: self.topAnchor, leading: profileImageView.trailingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, paddingTop: 4, paddingLeft: 4, paddingBottom: 4, paddingRight: 4, width: 0, height: 0)
         
-        profileImageView.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        profileImageView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: nil, trailing: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
 
     }
     

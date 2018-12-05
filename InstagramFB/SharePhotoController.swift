@@ -48,14 +48,14 @@ class SharePhotoController: UIViewController {
         
         view.addSubview(containerView)
         
-        containerView.anchor(top: topLayoutGuide.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 100)
+        containerView.anchor(top: topLayoutGuide.bottomAnchor, leading: view.safeLeadingAnchor, bottom: nil, trailing: view.safeTrailingAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 100)
         
         containerView.addSubview(postPhotoImageView)
         containerView.addSubview(postCaptionTextView)
         
-        postPhotoImageView.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 8, paddingRight: 0, width: 84, height: 0)
+        postPhotoImageView.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 8, paddingRight: 0, width: 84, height: 0)
         
-        postCaptionTextView.anchor(top: containerView.topAnchor, left: postPhotoImageView.rightAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        postCaptionTextView.anchor(top: containerView.topAnchor, leading: postPhotoImageView.trailingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
     }
     
@@ -68,12 +68,13 @@ class SharePhotoController: UIViewController {
         guard let caption = postCaptionTextView.text, caption.count > 0 else { return }
         
         guard let postImage = selectedImage else { return }
-        guard let postImageData = UIImageJPEGRepresentation(postImage, 0.5) else { return }
+        guard let postImageData = postImage.jpegData(compressionQuality: 0.5) else { return }
         
         navigationItem.rightBarButtonItem?.isEnabled = false
         
         let postUid = UUID().uuidString
-        Storage.storage().reference().child("posts").child(postUid).putData(postImageData, metadata: nil) { (metadata, error: Error?) in
+        let storageRef = Storage.storage().reference().child("posts").child(postUid)
+        storageRef.putData(postImageData, metadata: nil) { (metadata, error: Error?) in
             
             if error != nil {
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
@@ -81,9 +82,10 @@ class SharePhotoController: UIViewController {
                 return
             }
             
-            guard let postImageDownloadUrl = metadata?.downloadURL()?.absoluteString else { return }
-
-            self.saveToDatabaseWithImageUrl(postImageDownloadUrl: postImageDownloadUrl)
+            storageRef.downloadURL(completion: { (url, error) in
+                guard let postImageDownloadUrl = url?.absoluteString else { return }
+                self.saveToDatabaseWithImageUrl(postImageDownloadUrl: postImageDownloadUrl)
+            })
         }
     }
     

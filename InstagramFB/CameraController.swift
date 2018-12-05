@@ -52,10 +52,10 @@ class CameraController: UIViewController {
         view.addSubview(capturePhotoButton)
         view.addSubview(dismissButton)
         
-        capturePhotoButton.anchor(top: nil, left: nil, bottom: view.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 24, paddingRight: 0, width: 80, height: 80)
-        capturePhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        capturePhotoButton.anchor(top: nil, leading: nil, bottom: view.safeBottomAnchor, trailing: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 24, paddingRight: 0, width: 80, height: 80)
+        capturePhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).activate()
         
-        dismissButton.anchor(top: view.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 50, height: 50)
+        dismissButton.anchor(top: view.safeTopAnchor, leading: nil, bottom: nil, trailing: view.safeTrailingAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 50, height: 50)
     }
     
     @objc func handleCapturePhoto() {
@@ -118,20 +118,7 @@ extension CameraController: UIViewControllerTransitioningDelegate {
 }
 
 extension CameraController: AVCapturePhotoCaptureDelegate {
-    
-//    func photoOutput(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
-//
-//        let imageData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: photoSampleBuffer!, previewPhotoSampleBuffer: previewPhotoSampleBuffer!)
-//
-//        let previewImage = UIImage(data: imageData!)
-//
-//        let containerView = PreviewPhotoContainerView()
-//        containerView.previewImageView.image = previewImage
-//        view.addSubview(containerView)
-//        containerView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-//
-//    }
-//
+
     @available(iOS 11.0, *)
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         
@@ -144,7 +131,7 @@ extension CameraController: AVCapturePhotoCaptureDelegate {
         
         view.addSubview(containerView)
         
-        containerView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        containerView.anchor(top: view.safeTopAnchor, leading: view.safeLeadingAnchor, bottom: view.safeBottomAnchor, trailing: view.safeTrailingAnchor)
         
     }
 }

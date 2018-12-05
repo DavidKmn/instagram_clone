@@ -46,7 +46,7 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
                         if self.messages.count > 0 {
                             let indexPathOfLastItem = IndexPath(item: self.messages.count - 1, section: 0)
                             if self.indexPathIsValid(indexPath: indexPathOfLastItem) {
-                                self.collectionView?.scrollToItem(at: indexPathOfLastItem, at: UICollectionViewScrollPosition.top, animated: true)
+                                self.collectionView?.scrollToItem(at: indexPathOfLastItem, at: UICollectionView.ScrollPosition.top, animated: true)
                             }
                         }
                     }
@@ -99,14 +99,14 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
     }
     
     private func setupKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: .UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
     }
     
     @objc func handleKeyboardDidShow() {
         if messages.count > 0 {
             let indexPathOfLastItem = IndexPath(item: messages.count - 1, section: 0)
             if indexPathIsValid(indexPath: indexPathOfLastItem) {
-                collectionView?.scrollToItem(at: indexPathOfLastItem, at: UICollectionViewScrollPosition.top, animated: true)
+                collectionView?.scrollToItem(at: indexPathOfLastItem, at: UICollectionView.ScrollPosition.top, animated: true)
             }
         }
     }
@@ -291,7 +291,7 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
         
         let size = CGSize(width: 200, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let attributes = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16)]
+        let attributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)]
         
         let estimatedRect = NSString(string: text).boundingRect(with: size, options: options, attributes: attributes, context: nil)
         return estimatedRect
@@ -386,9 +386,9 @@ extension ChatLogController: ChatInputContainerViewDelegate, UIImagePickerContro
         present(imagePickerController, animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let url = info[UIImagePickerControllerMediaURL] as? URL {
+        if let url = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
             // user selected a video
            self.handleVideoSelectedForUrl(url: url)
         } else {
@@ -400,20 +400,21 @@ extension ChatLogController: ChatInputContainerViewDelegate, UIImagePickerContro
     
     private func handleVideoSelectedForUrl(url: URL) {
         let filename = UUID().uuidString + ".mov"
-        
-        let uploadTaks = Storage.storage().reference().child("message_videos").child(filename).putFile(from: url, metadata: nil, completion: { (metadata, error) in
+        let storageRef = Storage.storage().reference().child("message_videos").child(filename)
+        let uploadTaks = storageRef.putFile(from: url, metadata: nil, completion: { (metadata, error) in
             if let error = error {
                 print("Error uploading the video message to FB S: ", error.localizedDescription)
                 return
             }
             
-            if let videoUrl = metadata?.downloadURL()?.absoluteString {
-                if let thumbnailImage = self.thumbnailImageForVideoUrl(url: url) {
+            storageRef.downloadURL(completion: { (url, error) in
+                guard let videoUrl = url else { return }
+                if let thumbnailImage = self.thumbnailImageForVideoUrl(url: videoUrl) {
                     self.uploadImageToFirebaseStorage(image: thumbnailImage, completion: { (thumbnailImageUrl) in
-                        self.sendMessageWithVideoUrl(videoUrl: videoUrl, thumbnailImage: thumbnailImage, thumbnailImageUrl: thumbnailImageUrl)
+                        self.sendMessageWithVideoUrl(videoUrl: videoUrl.absoluteString, thumbnailImage: thumbnailImage, thumbnailImageUrl: thumbnailImageUrl)
                     })
                 }
-            }
+            })
         })
         
         uploadTaks.observe(.progress) { (snapshot) in
@@ -443,11 +444,11 @@ extension ChatLogController: ChatInputContainerViewDelegate, UIImagePickerContro
         return nil
     }
     
-    private func handleImageSelectedForInfoDict(info: [String : Any]) {
+    private func handleImageSelectedForInfoDict(info: [UIImagePickerController.InfoKey : Any]) {
         var selectedImageFromImagePicker: UIImage?
-        if let edditedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+        if let edditedImage = info[.editedImage] as? UIImage {
             selectedImageFromImagePicker = edditedImage
-        } else if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        } else if let originalImage = info[.originalImage] as? UIImage {
             selectedImageFromImagePicker = originalImage
         }
         
@@ -460,20 +461,21 @@ extension ChatLogController: ChatInputContainerViewDelegate, UIImagePickerContro
     
     private func uploadImageToFirebaseStorage(image: UIImage, completion: @escaping (_ imageDownloadUrl: String) -> ()) {
        
-        guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
+        guard let uploadData = image.jpegData(compressionQuality: 0.3) else { return }
         let imageUID = UUID().uuidString
         
         let storageRef = Storage.storage().reference().child("message_images").child(imageUID)
         
         storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
-            if let error = error {
+            if let error = error, let _ = metadata {
                 print("Error uploading Image Data to FB S: ", error.localizedDescription)
                 return
             }
             
-            if let imageDownloadUrl = metadata?.downloadURL()?.absoluteString {
-              completion(imageDownloadUrl)
-            }
+            storageRef.downloadURL(completion: { (url, error) in
+                guard let imageImageDownloadURL = url else { return }
+                completion(imageImageDownloadURL.absoluteString)
+            })
         }
     }
     
